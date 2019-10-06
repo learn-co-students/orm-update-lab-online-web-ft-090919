@@ -66,9 +66,8 @@ class Student
       FROM students
       WHERE name = ?
     SQL
-    student = DB[:conn].execute(sql, name).map do |row|
-      self.new_from_db(row)
-    end.first
+    student = DB[:conn].execute(sql, name) do |row|
+      self.new_from_db(student)[0]
   end
 
 end
