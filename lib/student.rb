@@ -59,12 +59,10 @@ class Student
   def self.create(name, grade)
     new_student = self.new(name, grade)
     new_student.save
-    new_student
   end
 
   def self.new_from_db(row)
-    new_student = self.new(row[0], row[1], row[2])
-    new_student
+    self.new(row[0], row[1], row[2])
   end
 
   def self.find_by_name(name)
@@ -75,8 +73,9 @@ class Student
     LIMIT 1
     SQL
 
-    record = DB[:conn].execute(sql, name)[0]
-    self.new_from_db(record)
+    DB[:conn].execute(sql, name).map do |row|
+      self.new_from_db(row)
+    end.first
   end
 
 end
