@@ -36,7 +36,7 @@ class Student
     INSERT INTO students(name, grade)
     VALUES (?, ?)
     SQL
-
+    binding.pry
     if DB[:conn].execute(sql, self.name, self.grade).empty?
       self.update
     end
